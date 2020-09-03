@@ -16,3 +16,11 @@ def getMSSV(fb_id):
     myCursor.execute(sql)
     myResult = myCursor.fetchall()
     return myResult[0][0]
+
+# Insert to DB
+def insertMSSV(fb_id, MSSV):
+    myCursor = myDB.cursor()
+    sql = "INSERT INTO users(id, fb_id, username) VALUES ('', %s, %s)"
+    val = (fb_id, MSSV)
+    myCursor.execute(sql, val)
+    myDB.commit()

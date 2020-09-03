@@ -1,4 +1,5 @@
 import requests
+import connectDB
 from bs4 import BeautifulSoup
 
 
@@ -14,6 +15,17 @@ def getInformation(user):
     information += data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblLop').text
     information += data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblContentLopSV').text
     return information
+
+
+
+# Check MSSV
+def checkMSSV(user):
+    try:
+        getInformation(user)
+        return bool(1)
+    except:
+        return bool(0)
+
 
 
 
@@ -55,17 +67,30 @@ def getSchedule(user):
 
     dayOfWeek = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật']
 
-    for i in range(0, 6):
+    for i in range(0, 7):
         message_subject = ''
         for subject in fullSubjects:
             if (subject[3] == i):
-                message_subject += '\n⏰ ' + subject[1]
-                message_subject += '\n+ Phòng học: ' + subject[5]
-                message_subject += '\n+ Giảng viên: ' + subject[8]
-                message_subject += '\n+ Bắt đầu: Tiết ' + subject[6]
-                message_subject += '\n+ Kết thúc: Tiết ' + str(int(subject[6]) + int(subject[7]))
+                message_subject += '\n ⏰ ' + subject[1]
+                message_subject += '\n   + Phòng học: ' + subject[5]
+                message_subject += '\n   + Giảng viên: ' + subject[8]
+                message_subject += '\n   + Bắt đầu: Tiết ' + subject[6]
+                message_subject += '\n   + Kết thúc: Tiết ' + str(int(subject[6]) + int(subject[7]))
         if (message_subject != ''):
             message += '\n\n🔥 '+ dayOfWeek[i] +' 🔥'
             message += message_subject
 
     return message
+
+user = '1824801030067'
+fb_id = '123'
+
+# Test Insert
+if checkMSSV(user):
+    try:
+        connectDB.insertMSSV(fb_id, user)
+        print('Done!')
+    except:
+        print('MSSV Existed!')
+else:
+    print('Can\'t find MSSV')
