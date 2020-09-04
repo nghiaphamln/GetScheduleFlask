@@ -1,23 +1,31 @@
-import json
 from flask import Flask, jsonify
-import getSchedule
-import connectDB
+from module.bypasscaptcha import GetCookies
+from module.getdata import getInformation, getSchedule
+
 app = Flask(__name__)
 
 
-@app.route('/getInformation/<fb_id>')
-def Information(fb_id):
-    user = connectDB.getMSSV(fb_id)
-    return getSchedule.getInformation(user)
+@app.route('/')
+def welcome():
+    return 'Welcome to my API'
 
-
-@app.route('/getSchedule/<fb_id>')
-def Schedule(fb_id):
-    user = connectDB.getMSSV(fb_id)
+@app.route('/getInformation/<user>')
+def Information(user):
     res = {
         'messages': [
             {
-                'text': getSchedule.getSchedule(user)
+                'text': getInformation(user)
+            }
+        ]
+    }
+    return jsonify(res)
+
+@app.route('/getSchedule/<user>')
+def Schedule(user):
+    res = {
+        'messages': [
+            {
+                'text': getSchedule(user)
             }
         ]
     }
