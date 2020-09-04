@@ -1,6 +1,7 @@
 import requests
-import connectDB
+# import connectDB
 from bs4 import BeautifulSoup
+#import BypassCaptcha
 
 
 # Get web page
@@ -81,16 +82,10 @@ def getSchedule(user):
             message += message_subject
 
     return message
+'''
+BypassCaptcha.ExcuteBypassCaptcha()
 
-user = '1824801030067'
-fb_id = '123'
-
-# Test Insert
-if checkMSSV(user):
-    try:
-        connectDB.insertMSSV(fb_id, user)
-        print('Done!')
-    except:
-        print('MSSV Existed!')
-else:
-    print('Can\'t find MSSV')
+try:
+    print(getSchedule('1824801040118'))
+except:
+    print('Err')'''

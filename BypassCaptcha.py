@@ -5,6 +5,7 @@ import re
 #Soup
 url = 'https://dkmh.tdmu.edu.vn/'
 dataHtml = requests.get(url)
+cookies = dataHtml.cookies
 data = BeautifulSoup(dataHtml.content,'html.parser')
 
 # Get Captcha
@@ -27,5 +28,16 @@ values = {
     'ctl00$ContentPlaceHolder1$ctl00$txtCaptcha': captcha,
     'ctl00$ContentPlaceHolder1$ctl00$btnXacNhan': 'Vào website'
 }
-def ExcuteBypassCaptcha():
-    return requests.post(url, data = values)
+#cookies = dict(cookies_are='working')
+requests.post(url, data = values, cookies = cookies)
+
+
+# Get information of student
+user = '1824801040118'
+
+dataHtml = requests.get(url + 'default.aspx?page=thoikhoabieu&sta=0&id=' + user, cookies = cookies)
+data = BeautifulSoup(dataHtml.content, "html.parser")
+information = data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblContentTenSV').text
+information += data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblLop').text
+information += data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblContentLopSV').text
+print(information)
