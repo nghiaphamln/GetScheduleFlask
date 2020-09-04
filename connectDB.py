@@ -20,7 +20,9 @@ def getMSSV(fb_id):
 # Insert to DB
 def insertMSSV(fb_id, MSSV):
     myCursor = myDB.cursor()
-    sql = "INSERT INTO users(id, fb_id, username) VALUES ('', %s, %s)"
+    sql = "INSERT INTO Users(fb_id, username) VALUES (%s, %s)"
     val = (fb_id, MSSV)
     myCursor.execute(sql, val)
     myDB.commit()
+
+insertMSSV('123', '1824801030067')
