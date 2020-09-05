@@ -17,6 +17,7 @@ def getInformation(user):
     information += data.find('span', id = 'ctl00_ContentPlaceHolder1_ctl00_lblContentLopSV').text
     return information
 
+
 # Get Schedule
 def getSchedule(user):
     fullSubjects = []
@@ -31,7 +32,7 @@ def getSchedule(user):
         subject = subject.split("','")
         fullSubjects.append(subject)
 
-    # convert day to integer
+    # Convert Day to Integer
     for i in fullSubjects:
         if i[3] == 'Thứ Hai':
             i[3] = 0
